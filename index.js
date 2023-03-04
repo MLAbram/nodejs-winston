@@ -18,11 +18,11 @@ app.get('/', (req, res) => {
 
 app.get('/error', (req, res) => {
   logger.error('Error', {
-    headersHost: req.headers['host'],
-    headersLanguage: req.headers['accept-language'],
-    headersSecMobile: req.headers['sec-ch-ua-mobile'],
-    headersPlatform: req.headers['sec-ch-ua-platform'],
-    headersAgent: req.headers['user-agent']
+    headersHost: req.headers,
+    // headersLanguage: req.headers['accept-language'],
+    // headersSecMobile: req.headers['sec-ch-ua-mobile'],
+    // headersPlatform: req.headers['sec-ch-ua-platform'],
+    // headersAgent: req.headers['user-agent']
   });
   
   return res.status(200).send('Error');

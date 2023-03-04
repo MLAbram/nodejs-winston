@@ -12,8 +12,8 @@
 
 const { createLogger, transports, format } = require('winston');
 const { combine, timestamp, json, printf } = format;
-const dotenv = require('dotenv').config();
 
+require('dotenv').config();
 require('winston-mongodb');
 require('winston-daily-rotate-file');
 
@@ -31,6 +31,12 @@ const logger = createLogger({
         new transports.File({
             level: 'silly',
             filename: 'logs/winston-prettyPrint.log',
+            format: format.combine(timestamp(), format.prettyPrint())
+        }),
+        new transports.File({
+            level: 'error',
+            filename: 'logs/winston-errors.log',
+            // format: format.combine(timestamp(), format.json())
             format: format.combine(timestamp(), format.prettyPrint())
         }),
         new transports.MongoDB({

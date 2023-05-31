@@ -17,12 +17,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/error', (req, res) => {
-  logger.error('Error', {
-    headersHost: req.headers,
+  logger.error({
+    routeName: 'index.js',
+    routeFunction: '/error',
+    // headersHost: req.headers,
     // headersLanguage: req.headers['accept-language'],
     // headersSecMobile: req.headers['sec-ch-ua-mobile'],
     // headersPlatform: req.headers['sec-ch-ua-platform'],
-    // headersAgent: req.headers['user-agent']
+    // headersAgent: req.headers['user-agent'],
+    message: 'This is only a test...'
   });
   
   return res.status(200).send('Error');

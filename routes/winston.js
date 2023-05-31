@@ -18,7 +18,7 @@ require('winston-mongodb');
 require('winston-daily-rotate-file');
 
 const logger = createLogger({
-    defaultMeta: {service: 'admin-service'},
+    // defaultMeta: {service: 'admin-service'},
     transports: [
         new transports.Console(),
         new transports.DailyRotateFile({

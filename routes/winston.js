@@ -4,20 +4,29 @@
 
 // https://betterstack.com/community/guides/logging/how-to-install-setup-and-use-winston-and-morgan-to-log-node-js-applications/
 // https://www.section.io/engineering-education/logging-with-winston/
-// https://dev.to/jobizil/getting-started-with-winston-logger-a-beginner-s-guide-7j3
+// https://dev.to/jobizil/getting-started-with-winston-winston-a-beginner-s-guide-7j3
 
 // https://www.youtube.com/watch?v=PdVlAi7nrRU
-// https://github.com/Tariqu/winston_logger_example
+// https://github.com/Tariqu/winston_winston_example
+
+// https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
-const { createLogger, transports, format } = require('winston');
-const { combine, timestamp, json, printf } = format;
+const { createLogger, transports, format } = require('winston')
+const { combine, timestamp, json, printf } = format
 
-require('dotenv').config();
-require('winston-mongodb');
-require('winston-daily-rotate-file');
+require('dotenv').config()
+require('winston-mongodb')
+require('winston-daily-rotate-file')
 
-const logger = createLogger({
+const timezoned = () => {
+    return new Date().toLocaleString('en-US', {
+        timeZone: 'America/Chicago',
+        hour12: false
+    })
+}
+
+const winston = createLogger({
     // defaultMeta: {service: 'admin-service'},
     transports: [
         new transports.Console(),
@@ -37,16 +46,19 @@ const logger = createLogger({
             level: 'error',
             filename: 'logs/winston-errors.log',
             // format: format.combine(timestamp(), format.json())
-            format: format.combine(timestamp(), format.prettyPrint())
+            format: format.combine(timestamp({format: timezoned}), format.prettyPrint())
         }),
         new transports.MongoDB({
             level: 'error',
             db: process.env.MONGODB,
-            options: { useNewUrlParser: true, useUnifiedTopology: true },
+            options: { 
+                useNewUrlParser: true, 
+                useUnifiedTopology: true 
+            },
             collection: 'nodejs_winston',
             format: format.combine(format.timestamp(), format.json())
         })
     ]
-});
+})
 
-module.exports = logger;
+module.exports = winston

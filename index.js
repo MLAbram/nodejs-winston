@@ -1,23 +1,23 @@
-const express = require('express');
-const app = express();
-const logger = require('./routes/winston');
+const express = require('express')
+const app = express()
+const winston = require('./routes/winston')
 
-app.use(express.json());
+app.use(express.json())
 
 app.get('/', (req, res) => {
-  logger.error('Error');
-  logger.warn('Warn');
-  logger.info('Info');
-  logger.http('HTTP');
-  logger.verbose('Verbose');
-  logger.debug('Debug');
-  logger.silly('Silly');
+  winston.error('Error')
+  winston.warn('Warn')
+  winston.info('Info')
+  winston.http('HTTP')
+  winston.verbose('Verbose')
+  winston.debug('Debug')
+  winston.silly('Silly')
 
-  return res.status(200).send('Error, Warn, Info, HTTP, Verbose, Debug, Silly');
-});
+  return res.status(200).send('Error, Warn, Info, HTTP, Verbose, Debug, Silly')
+})
 
 app.get('/error', (req, res) => {
-  logger.error({
+  winston.error({
     routeName: 'index.js',
     routeFunction: '/error',
     // headersHost: req.headers,
@@ -26,47 +26,47 @@ app.get('/error', (req, res) => {
     // headersPlatform: req.headers['sec-ch-ua-platform'],
     // headersAgent: req.headers['user-agent'],
     message: 'This is only a test...'
-  });
+  })
   
-  return res.status(200).send('Error');
-});
+  return res.status(200).send('Error')
+})
 
 app.get('/warn', (req, res) => {
-  logger.warn('Warn');
+  winston.warn('Warn')
   
-  return res.status(200).send('Warn');
-});
+  return res.status(200).send('Warn')
+})
 
 app.get('/info', (req, res) => {
-  logger.info('Info');
+  winston.info('Info')
   
-  return res.status(200).send('Info');
-});
+  return res.status(200).send('Info')
+})
 
 app.get('/http', (req, res) => {
-  logger.http('HTTP');
+  winston.http('HTTP')
   
-  return res.status(200).send('HTTP');
-});
+  return res.status(200).send('HTTP')
+})
 
 app.get('/verbose', (req, res) => {
-  logger.verbose('Verbose');
+  winston.verbose('Verbose')
   
-  return res.status(200).send('Verbose');
-});
+  return res.status(200).send('Verbose')
+})
 
 app.get('/debug', (req, res) => {
-  logger.debug('Debug');
+  winston.debug('Debug')
   
-  return res.status(200).send('Debug');
-});
+  return res.status(200).send('Debug')
+})
 
 app.get('/silly', (req, res) => {
-  logger.silly('Silly');
+  winston.silly('Silly')
   
-  return res.status(200).send('Silly');
-});
+  return res.status(200).send('Silly')
+})
 
 app.listen(3000, () => {
-  console.log('Server listening on port: 3000.');
-});
+  console.log('Server listening on port: 3000.')
+})

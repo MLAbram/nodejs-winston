@@ -17,7 +17,6 @@ const { combine, timestamp, json, printf } = format
 
 require('dotenv').config()
 require('winston-mongodb')
-require('winston-postgresql').PostgreSQL
 require('winston-daily-rotate-file')
 
 const timezoned = () => {
@@ -31,22 +30,16 @@ const winston = createLogger({
     // defaultMeta: {service: 'admin-service'},
     transports: [
         new transports.Console(),
-        // new transports.MongoDB({
-        //     level: 'error',
-        //     db: process.env.MONGODB,
-        //     options: { 
-        //         useNewUrlParser: true, 
-        //         useUnifiedTopology: true 
-        //     },
-        //     collection: 'nodejs_winston',
-        //     format: format.combine(format.timestamp(), format.json())
-        // }),
-        // new transports.PostgreSQL({
-        //     connString: '',
-        //     tableName: '',
-        //     customSQL: '',
-        //     level: 'error'
-        // }),
+        new transports.MongoDB({
+            level: 'error',
+            db: process.env.MONGODB,
+            options: { 
+                useNewUrlParser: true, 
+                useUnifiedTopology: true 
+            },
+            collection: 'nodejs_winston',
+            format: format.combine(format.timestamp(), format.json())
+        }),
         new transports.DailyRotateFile({
             level: 'info',
             filename: 'logs/winston-info-%DATE%.log',
